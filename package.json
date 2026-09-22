@@ -1,0 +1,31 @@
+{
+  "name": "farulwananda-astro-cv",
+  "version": "1.0.0",
+  "description": "Executive Curriculum Vitae & Verified Candidate Profile of Farul Wananda (Astro + Cloudflare Workers)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 4321",
+    "check": "astro check",
+    "build": "astro build",
+    "preview": "astro preview",
+    "preview:worker": "astro build && wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "types": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.3.0",
+    "@astrojs/mdx": "^8.0.0",
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^7.3.1",
+    "tailwindcss": "^3.4.19",
+    "wrangler": "^4.129.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@emnapi/runtime": "^1.11.3",
+    "@types/node": "^26.5.0",
+    "typescript": "^5.9.3"
+  }
+}

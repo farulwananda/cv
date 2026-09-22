@@ -1,0 +1,19 @@
+# Build outputs
+dist/
+.output/
+.nitro/
+.astro/
+
+# Dependencies
+node_modules/
+app-react/node_modules/
+app-react/.output/
+app-react/.nitro/
+
+# Environment and temp
+.env
+.env.*
+.dev.vars
+.wrangler/
+.DS_Store
+*.log

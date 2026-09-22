@@ -1,0 +1,5 @@
+# Cloudflare Worker Environment Variables (Local Dev)
+# Copy this file to .dev.vars for local testing with `npm run preview:worker`
+
+# Optional Custom Environment Variables
+# MY_VARIABLE="value"

@@ -1,0 +1,343 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import ExperienceItem from '../components/ExperienceItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import FloatingDock from '../components/FloatingDock.astro';
+import ContactModal from '../components/ContactModal.astro';
+import { Image } from 'astro:assets';
+import profileImg from '../assets/profile.jpg';
+
+// Modular MDX data imports
+import { Content as SummaryContent, frontmatter as profileData } from '../content/profile.mdx';
+import { frontmatter as experienceData } from '../content/experience.mdx';
+import { frontmatter as projectData } from '../content/projects.mdx';
+import { frontmatter as certificationData } from '../content/certifications.mdx';
+import { frontmatter as educationData } from '../content/education.mdx';
+import { frontmatter as skillsData } from '../content/skills.mdx';
+import { frontmatter as contactData } from '../content/contact.mdx';
+
+import type {
+  PersonalInfo,
+  SocialLink,
+  Experience,
+  Project,
+  Certification,
+  Education,
+  CapabilityGroup,
+  ContactInfo
+} from '../types';
+
+const personal = profileData.personal as PersonalInfo;
+const socialLinks = profileData.socialLinks as SocialLink[];
+const experiences = experienceData.experiences as Experience[];
+const projects = projectData.projects as Project[];
+const certifications = certificationData.certifications as Certification[];
+const education = educationData.education as Education[];
+const capabilities = (skillsData.capabilities || []) as CapabilityGroup[];
+const contact = contactData as ContactInfo;
+---
+
+<Layout
+  title={`${personal.name} — Curriculum Vitae & Senior Software Engineer`}
+  description={`Official Curriculum Vitae of ${personal.name} — ${personal.title}. Review verified professional leadership, system engineering experience, technical arsenal, and certifications.`}
+>
+  <!-- Identity & Executive Header -->
+  <header class="mb-10 sm:mb-12 animate-reveal">
+    <!-- Split Header: Bio & High-End Portrait Image -->
+    <div class="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-6">
+        <div class="space-y-3 flex-1">
+          <div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#20201e] dark:text-[#f1f0ec] leading-tight">
+              {personal.name}
+            </h1>
+            <p class="text-base sm:text-lg text-[#6f6e69] dark:text-[#a6a49e] font-normal leading-relaxed pt-1">
+              {personal.title}
+            </p>
+          </div>
+
+          <!-- Quick Contact Bar with Click-to-Copy Email -->
+          <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-[#6f6e69] dark:text-[#a6a49e] pt-1">
+            <!-- Location -->
+            <div class="inline-flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-[#6f6e69]/70 dark:text-[#a6a49e]/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>{personal.location}</span>
+            </div>
+
+            <!-- Email with Click-to-Open Modal & Copy Button -->
+            <div class="relative inline-flex items-center gap-1 group/email">
+              <button
+                type="button"
+                data-open-contact-modal
+                class="inline-flex items-center gap-1.5 hover:text-[#c65f36] dark:hover:text-[#df7950] underline decoration-[#deddd8] dark:decoration-[#302f2f] hover:decoration-[#c65f36] dark:hover:decoration-[#df7950] underline-offset-4 transition-colors cursor-pointer text-left"
+                title={`Initiate discussion with ${personal.email}`}
+              >
+                <svg class="w-3.5 h-3.5 text-[#6f6e69]/70 dark:text-[#a6a49e]/70 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002-2v-4a2 2 0 002 2h2M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span>{personal.email}</span>
+              </button>
+
+              <!-- Copy Email Button -->
+              <button
+                id="copy-email-btn"
+                type="button"
+                data-email={personal.email}
+                class="inline-flex items-center justify-center p-1 rounded-[4px] text-[#6f6e69] hover:text-[#20201e] dark:text-[#a6a49e] dark:hover:text-[#f1f0ec] hover:bg-[#efefec] dark:hover:bg-[#161618] transition-colors cursor-pointer relative print:hidden"
+                title="Copy email address"
+                aria-label="Copy email address to clipboard"
+              >
+                <svg id="copy-email-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <svg id="check-email-icon" class="w-3.5 h-3.5 text-[#c65f36] dark:text-[#df7950] hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                </svg>
+
+                <span
+                  id="copy-email-tooltip"
+                  class="absolute -top-7 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[10px] font-medium tracking-tight bg-[#20201e] dark:bg-[#f1f0ec] text-[#f7f7f5] dark:text-[#111113] rounded-[4px] shadow-md pointer-events-none opacity-0 translate-y-1 transition-all duration-150 whitespace-nowrap z-30"
+                  role="status"
+                >
+                  Copied!
+                </span>
+              </button>
+            </div>
+
+            <!-- Social Links -->
+            {socialLinks.map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 hover:text-[#c65f36] dark:hover:text-[#df7950] transition-colors group"
+              >
+                <span>{social.name}</span>
+                <svg class="w-2.5 h-2.5 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all print:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Profile Portrait Frame (Vantis Modern Crisp Corner) -->
+        <div class="relative shrink-0 self-start sm:self-center print:hidden">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-[6px] overflow-hidden border border-[#deddd8] dark:border-[#302f2f] shadow-sm group">
+            <Image
+              src={profileImg}
+              alt="Farul Wananda"
+              width={256}
+              height={256}
+              class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              loading="eager"
+              fetchpriority="high"
+              format="webp"
+            />
+          </div>
+        </div>
+      </div>
+  </header>
+
+  <!-- 1. Executive Summary -->
+  <div class="animate-reveal delay-100">
+    <Section title="Summary" id="summary">
+      <div class="space-y-2 text-[#6f6e69] dark:text-[#d4d2cc] print:text-neutral-800 text-sm sm:text-base leading-relaxed prose prose-neutral dark:prose-invert max-w-none">
+        <SummaryContent />
+      </div>
+    </Section>
+  </div>
+
+  <!-- 2. Technical Arsenal -->
+  <div class="animate-reveal delay-150">
+    <Section title="Technical Arsenal" id="skills">
+      <div class="space-y-3.5 print:space-y-2">
+        {capabilities.map((group) => (
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-4 py-2.5 border-b border-[#deddd8]/60 dark:border-[#302f2f]/60 last:border-b-0 print:border-neutral-200 print:py-1">
+            <div class="sm:w-44 shrink-0">
+              <h3 class="text-xs uppercase tracking-wider font-semibold text-[#20201e] dark:text-[#f1f0ec]">
+                {group.category}
+              </h3>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              {group.items.map((item) => (
+                <span class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-md bg-[#efefec] dark:bg-[#1a1a1c] text-[#20201e] dark:text-[#f1f0ec] border border-[#deddd8] dark:border-[#302f2f] hover:border-[#c65f36] dark:hover:border-[#df7950] transition-colors badge-tag">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <!-- 3. Professional Experience -->
+  <div class="animate-reveal delay-200">
+    <Section title="Work Experience" id="experience">
+      <div class="space-y-8 print:space-y-4">
+        {experiences.map((exp) => (
+          <ExperienceItem experience={exp} />
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <!-- 4. Selected Projects -->
+  <div class="animate-reveal delay-300">
+    <Section title="Selected Engineering Projects" id="projects">
+      <div class="space-y-8 print:space-y-4">
+        {projects.map((proj) => (
+          <ProjectCard project={proj} />
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <!-- 5. Professional Certifications -->
+  <div class="animate-reveal delay-400">
+    <Section title="Certifications" id="certifications">
+      <div class="space-y-4 print:space-y-2.5">
+        {certifications.map((cert) => (
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 pb-3 border-b border-[#deddd8]/70 dark:border-[#302f2f]/70 print:border-neutral-200 print-break-inside-avoid">
+            <div class="space-y-0.5">
+              <h3 class="text-sm sm:text-base font-bold text-[#20201e] dark:text-[#f1f0ec] print:!text-black">
+                {cert.link ? (
+                  <a
+                    href={cert.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 hover:text-[#c65f36] dark:hover:text-[#df7950] underline decoration-[#deddd8] dark:decoration-[#302f2f] hover:decoration-[#c65f36] dark:hover:decoration-[#df7950] underline-offset-4 transition-colors group print:!text-black"
+                  >
+                    <span>{cert.name}</span>
+                    <svg class="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all print:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                  </a>
+                ) : (
+                  <span>{cert.name}</span>
+                )}
+              </h3>
+              <p class="text-xs sm:text-sm text-[#6f6e69] dark:text-[#a6a49e] print:!text-neutral-800">
+                <span>{cert.issuer}</span>
+                {cert.credentialId && (
+                  <>
+                    <span class="text-[#deddd8] dark:text-[#302f2f] mx-1.5">•</span>
+                    <span class="text-xs text-[#6f6e69] dark:text-[#a6a49e]">ID: {cert.credentialId}</span>
+                  </>
+                )}
+              </p>
+            </div>
+            <span class="text-xs text-[#6f6e69] dark:text-[#a6a49e] whitespace-nowrap">
+              {cert.date}
+            </span>
+          </div>
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <!-- 6. Education -->
+  <div class="animate-reveal delay-500">
+    <Section title="Education" id="education">
+      <div class="space-y-4 print:space-y-2.5">
+        {education.map((edu) => (
+          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 pb-3 border-b border-[#deddd8]/70 dark:border-[#302f2f]/70 print:border-neutral-200 print-break-inside-avoid">
+            <div class="space-y-1">
+              <h3 class="text-base font-bold text-[#20201e] dark:text-[#f1f0ec] print:!text-black">
+                {edu.degree}
+              </h3>
+              <p class="text-sm text-[#6f6e69] dark:text-[#a6a49e] print:!text-neutral-900 font-medium">
+                {edu.institution}
+              </p>
+              {edu.details && (
+                <p class="text-xs text-[#6f6e69]/80 dark:text-[#a6a49e]/80 pt-0.5">
+                  {edu.details}
+                </p>
+              )}
+            </div>
+            <span class="text-xs text-[#6f6e69] dark:text-[#a6a49e] whitespace-nowrap">
+              {edu.period}
+            </span>
+          </div>
+        ))}
+      </div>
+    </Section>
+  </div>
+
+  <!-- 7. Direct Collaboration Channel (Modular contact.mdx) -->
+  <div class="animate-reveal delay-600 print:hidden">
+    <Section title="Contact & Advisory" id="contact">
+      <div class="p-5 rounded-[6px] border border-[#deddd8] dark:border-[#302f2f] bg-[#fbfbf9] dark:bg-[#1a1a1c] space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-[#20201e] dark:text-[#f1f0ec]">
+              {contact.formHeading || "Open for Technical Leadership & Advisory"}
+            </h3>
+            <p class="text-xs text-[#6f6e69] dark:text-[#a6a49e]">
+              {contact.availability || "Available for select consulting, architecture reviews, and high-impact engineering roles."}
+            </p>
+          </div>
+          <button
+            type="button"
+            data-open-contact-modal
+            class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-[4px] bg-[#c65f36] hover:bg-[#97411f] dark:bg-[#df7950] dark:hover:bg-[#ef956e] text-white dark:text-[#111113] text-xs font-bold shadow-sm transition-all shrink-0 cursor-pointer"
+            aria-haspopup="dialog"
+          >
+            <span>Initiate Discussion</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </Section>
+  </div>
+
+  <!-- Custom Discussion / Contact Modal -->
+  <ContactModal email={personal.email} name={personal.name} availability={contact.availability} />
+
+  <!-- Modern Floating Action Bubble (Print PDF & Theme Toggle) -->
+  <FloatingDock mode="cv" />
+</Layout>
+
+<script>
+  function setupCopyEmail() {
+    const btn = document.getElementById('copy-email-btn');
+    const email = btn?.getAttribute('data-email');
+    const copyIcon = document.getElementById('copy-email-icon');
+    const checkIcon = document.getElementById('check-email-icon');
+    const tooltip = document.getElementById('copy-email-tooltip');
+
+    if (!btn || !email) return;
+
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(email);
+
+        if (copyIcon && checkIcon && tooltip) {
+          copyIcon.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          tooltip.classList.remove('opacity-0', 'translate-y-1');
+          tooltip.classList.add('opacity-100', 'translate-y-0');
+
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            tooltip.classList.add('opacity-0', 'translate-y-1');
+            tooltip.classList.remove('opacity-100', 'translate-y-0');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Failed to copy email:', err);
+      }
+    });
+  }
+
+  setupCopyEmail();
+  document.addEventListener('astro:page-load', setupCopyEmail);
+</script>

@@ -1,0 +1,30 @@
+---
+id: "postgres-partial-indexes"
+slug: "postgres-partial-indexes"
+title: "Tuning Hot Queries with Partial Indexes"
+date: "2026-06-25"
+tag: "PostgreSQL"
+excerpt: "When 95% of rows in a queue table have status = 'completed', indexing the whole table wastes buffer pool memory and slows down writes. A partial index with WHERE status != 'completed' shrinks the index size by 90% and makes active queue lookups lightning fast."
+takeaway: "Never index rows that will never appear in filtered WHERE clauses. Partial indexes save RAM, reduce WAL volume, and speed up VACUUM operations."
+---
+
+When 95% of rows in a queue table have `status = 'completed'`, indexing the entire table wastes valuable PostgreSQL buffer pool memory and slows down insert operations. 
+
+A partial index with `WHERE status != 'completed'` shrinks the physical index size by 90% and makes active worker queue lookups lightning fast.
+
+```sql
+-- Standard (Anti-Pattern): Indexes all 10M rows including completed archives
+-- CREATE INDEX idx_tasks_status ON tasks (status);
+
+-- High-Performance: Partial index covering only active work queue (< 50k rows)
+CREATE INDEX idx_tasks_active_queue 
+ON tasks (priority DESC, created_at ASC) 
+WHERE status IN ('pending', 'processing');
+
+-- Query Planner automatically uses the partial index
+EXPLAIN ANALYZE 
+SELECT id, payload FROM tasks 
+WHERE status = 'pending' 
+ORDER BY priority DESC, created_at ASC 
+LIMIT 1;
+```

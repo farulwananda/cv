@@ -1,0 +1,16 @@
+{
+  "name": "Farul Wananda — Curriculum Vitae",
+  "short_name": "Farul CV",
+  "description": "Curriculum Vitae & Senior Software Engineer Portfolio of Farul Wananda",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111113",
+  "theme_color": "#f7f7f5",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
