@@ -1,28 +1,16 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import cloudflare from '@astrojs/cloudflare';
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://farulwananda.dev',
-  output: 'static',
-  compressHTML: true,
-  adapter: cloudflare({
-    imageService: 'compile',
-  }),
-  markdown: {
-    shikiConfig: {
-      theme: 'github-dark',
-      wrap: true,
-    },
+  site: "https://farulwananda.my.id",
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "id"],
+    routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
   },
   integrations: [
-    tailwind({
-      applyBaseStyles: true,
-    }),
-    mdx(),
-    sitemap(),
+    sitemap({ filter: (page) => new URL(page).pathname !== "/" }),
+    icon({ iconDir: "src/assets" }),
   ],
 });

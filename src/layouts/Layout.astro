@@ -1,235 +1,50 @@
 ---
 import '../styles/global.css';
+import '@fontsource-variable/space-grotesk/wght.css';
+import { ClientRouter } from 'astro:transitions';
+import { cv, ui, type Locale } from '../data/cv';
 
-interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-}
-
-const {
-  title = "Farul Wananda — Curriculum Vitae & Senior Software Engineer",
-  description = "Official Curriculum Vitae of Farul Wananda — Senior Fullstack Software Engineer. Review verified professional leadership, system engineering experience, technical arsenal, and certifications.",
-  image = "/profile.jpg",
-} = Astro.props;
-
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://farulwananda.dev');
-
-// Schema.org Person Structured Data for Google Knowledge Graph
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Farul Wananda",
-  "jobTitle": "Senior Fullstack Software Engineer",
-  "url": "https://farulwananda.dev",
-  "email": "mailto:farulwananda@gmail.com",
-  "nationality": "Indonesian",
-  "sameAs": [
-    "https://github.com/farulwananda",
-    "https://linkedin.com/in/farulwananda"
-  ],
-  "knowsAbout": [
-    "TypeScript",
-    "JavaScript",
-    "Go",
-    "Astro",
-    "React",
-    "Next.js",
-    "Node.js",
-    "PHP",
-    "Laravel",
-    "PostgreSQL",
-    "Redis",
-    "Docker",
-    "Web Performance",
-    "Distributed Systems"
-  ],
-  "alumniOf": [
-    {
-      "@type": "EducationalOrganization",
-      "name": "Universitas / Institute of Technology",
-      "programName": "Bachelor of Science in Computer Science (S.Kom)"
-    }
-  ]
-};
+const { locale } = Astro.props as { locale: Locale };
+const canonicalUrl = new URL(`/${locale}/`, Astro.site);
+const title = ui[locale].pageTitle;
+const description = ui[locale].description;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
-    <!-- Core Meta Tags -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f6f3" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/profile.jpg" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
-
-    <!-- Google Fonts: Instrument Sans & JetBrains Mono (Preconnected for optimal LCP/FCP) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
-    <!-- SEO Title & Description -->
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="id" href={new URL('/id/', Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL('/en/', Astro.site)} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="Farul Wananda" />
-    <meta name="keywords" content="Farul Wananda, Curriculum Vitae, Software Engineer, Fullstack Developer, Astro, React, TypeScript, Go, Resume" />
-
-    <!-- Canonical URL & Sitemap -->
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-
-    <!-- Search Engine Crawlers -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-
-    <!-- Mobile Browser Chrome Theme Colors -->
-    <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111113" media="(prefers-color-scheme: dark)" />
-
-    <!-- Open Graph (Facebook, LinkedIn, Discord) -->
+    <meta name="robots" content={cv.draft ? 'noindex, nofollow' : 'index, follow'} />
     <meta property="og:type" content="profile" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:site_name" content="Farul Wananda CV" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:image" content={new URL(image, canonicalURL)} />
-    <meta property="profile:first_name" content="Farul" />
-    <meta property="profile:last_name" content="Wananda" />
-
-    <!-- Twitter / X Cards -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, canonicalURL)} />
-
-    <!-- Structured Data (JSON-LD) for Search Engine Rich Snippets -->
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-
-    <!-- Inline script to prevent theme flash (FOUC) & provide global theme toggle -->
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={locale === 'id' ? 'id_ID' : 'en_US'} />
+    <ClientRouter />
     <script is:inline>
-      (function () {
+      function applyTheme() {
         try {
-          const stored = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (stored === 'dark' || (!stored && prefersDark)) {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        } catch (_) {}
-
-        window.toggleTheme = function () {
-          try {
-            const isDark = document.documentElement.classList.toggle('dark');
-            try {
-              localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            } catch (_) {}
-
-            if (typeof window.renderMermaidCharts === 'function') {
-              window.renderMermaidCharts();
-            }
-          } catch (e) {
-            console.error('Failed to toggle theme:', e);
-          }
-        };
-
-        document.addEventListener('click', function (e) {
-          const target = e.target;
-          if (target && target.closest && target.closest('[data-theme-toggle]')) {
-            e.preventDefault();
-            window.toggleTheme();
-          }
-        });
-      })();
+          const saved = localStorage.getItem('cv-theme');
+          const dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch {
+          document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+      }
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
     </script>
   </head>
-  <body class="min-h-screen selection:bg-[#f1e3dc] selection:text-[#20201e] dark:selection:bg-[#2b1d18] dark:selection:text-[#df7950] bg-[#f7f7f5] dark:bg-[#111113] text-[#20201e] dark:text-[#f1f0ec]">
-    <div class="relative max-w-3xl mx-auto pl-5 pr-14 sm:px-8 py-8 sm:py-14 print:p-0 print:max-w-none">
-      <main>
-        <slot />
-      </main>
-
-      <!-- Pure CV Minimalist Footer -->
-      <footer class="mt-14 pt-6 border-t border-[#deddd8] dark:border-[#302f2f] text-xs text-[#6f6e69] dark:text-[#a6a49e] flex flex-col sm:flex-row justify-between items-center gap-2 print:hidden">
-        <p>© {new Date().getFullYear()} Farul Wananda. All rights reserved.</p>
-      </footer>
-    </div>
-
-    <!-- Dynamic Lazy-loaded Mermaid for architecture diagrams (Zero payload if no charts exist) -->
-    <script is:inline>
-      window.renderMermaidCharts = function() {
-        const mermaidBlocks = document.querySelectorAll(
-          'pre.mermaid, pre[data-language="mermaid"], div.mermaid'
-        );
-        if (!mermaidBlocks || mermaidBlocks.length === 0) return;
-
-        function runRender() {
-          if (!window.mermaid) return;
-          const isDark = document.documentElement.classList.contains('dark');
-          window.mermaid.initialize({
-            startOnLoad: false,
-            suppressErrorRendering: true,
-            theme: isDark ? 'dark' : 'neutral',
-            themeVariables: {
-              fontFamily: "'Instrument Sans', 'Geist', -apple-system, BlinkMacSystemFont, sans-serif",
-              fontSize: '13px',
-              darkMode: isDark,
-              background: isDark ? '#111113' : '#f7f7f5',
-              mainBkg: isDark ? '#1a1a1c' : '#fbfbf9',
-              nodeBorder: isDark ? '#302f2f' : '#deddd8',
-              lineColor: isDark ? '#df7950' : '#c65f36',
-              textColor: isDark ? '#f1f0ec' : '#20201e',
-            },
-            securityLevel: 'loose',
-          });
-
-          mermaidBlocks.forEach(async (el, idx) => {
-            let rawCode = el.innerText || el.textContent || '';
-            if (!rawCode.trim()) return;
-
-            rawCode = rawCode
-              .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
-              .replace(/[\u2018\u2019]/g, "'")
-              .replace(/[\u2013\u2014]/g, '--');
-
-            const container = document.createElement('div');
-            container.className =
-              'mermaid-wrapper my-6 p-4 sm:p-6 rounded-xl border border-[#deddd8] dark:border-[#302f2f] bg-[#fbfbf9] dark:bg-[#1a1a1c] flex justify-center overflow-x-auto shadow-xs';
-
-            const uniqueId = `mermaid-chart-${Date.now()}-${idx}`;
-            try {
-              const { svg } = await window.mermaid.render(uniqueId, rawCode.trim());
-              container.innerHTML = svg;
-              el.parentNode.replaceChild(container, el);
-            } catch (err) {
-              console.warn('Mermaid render notice:', err);
-            }
-          });
-        }
-
-        if (window.mermaid) {
-          runRender();
-        } else if (!document.getElementById('mermaid-script')) {
-          const script = document.createElement('script');
-          script.id = 'mermaid-script';
-          script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
-          script.onload = runRender;
-          document.head.appendChild(script);
-        }
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => window.renderMermaidCharts());
-      } else {
-        window.renderMermaidCharts();
-      }
-
-      document.addEventListener('astro:after-swap', () => {
-        if (window.renderMermaidCharts) window.renderMermaidCharts();
-      });
-    </script>
+  <body>
+    <slot />
   </body>
 </html>

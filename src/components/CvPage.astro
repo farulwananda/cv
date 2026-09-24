@@ -1,0 +1,180 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import portrait from '../assets/profile.jpg';
+import { cv, ui, type CvData, type CvDate, type Locale } from '../data/cv';
+
+const { locale } = Astro.props as { locale: Locale };
+const copy = ui[locale];
+const dateFormatter = new Intl.DateTimeFormat(locale === 'id' ? 'id-ID' : 'en-US', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const formatDate = (date: CvDate) => date.month
+  ? dateFormatter.format(new Date(Date.UTC(date.year, date.month - 1, 1)))
+  : String(date.year);
+const formatPeriod = (period: { start: CvDate; end?: CvDate }) => {
+  if (period.end?.year === period.start.year && period.end.month === period.start.month) {
+    return formatDate(period.start);
+  }
+  return `${formatDate(period.start)} - ${period.end ? formatDate(period.end) : copy.present}`;
+};
+const formatWorkplace = (job: CvData['experience'][number]) => [
+  job.company,
+  job.location && `${job.location}${job.workMode ? ` (${job.workMode[locale]})` : ''}`,
+].filter(Boolean).join(' · ');
+---
+
+<Layout locale={locale}>
+  <main class="cv" id="top">
+    <nav class="toolbar" aria-label={copy.actions}>
+      <div class="language-switch" role="group" aria-label={copy.language} data-active={locale}>
+        <span class="language-indicator" aria-hidden="true"></span>
+        <a href="/id/" lang="id" aria-current={locale === 'id' ? 'page' : undefined}>ID</a>
+        <a href="/en/" lang="en" aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
+      </div>
+      <span class="toolbar-divider" aria-hidden="true"></span>
+      <button type="button" id="theme-toggle" class="icon-button" aria-label={copy.darkTheme} title={copy.darkTheme} data-light-label={copy.lightTheme} data-dark-label={copy.darkTheme}>
+        <Icon name="ph:moon" class="theme-icon theme-icon-moon" aria-hidden="true" />
+        <Icon name="ph:sun" class="theme-icon theme-icon-sun" aria-hidden="true" />
+      </button>
+      <span class="toolbar-divider" aria-hidden="true"></span>
+      <button type="button" id="print-button" class="icon-button" aria-label={copy.print} title={copy.print}>
+        <Icon name="ph:printer" aria-hidden="true" />
+      </button>
+    </nav>
+
+    <header class="identity">
+      <div class="identity-copy">
+        <h1>{cv.name}</h1>
+        <p class="role">{cv.title[locale]}</p>
+        <div class="contact-line">
+          <span class="contact-item"><Icon name="ph:map-pin" aria-hidden="true" />{cv.location}</span>
+          <a class="contact-item" href={`mailto:${cv.email}`}><Icon name="ph:envelope-simple" aria-hidden="true" />{cv.email}</a>
+          {cv.links.map((link) => <a class="contact-item" href={link.url} target="_blank" rel="noopener noreferrer"><Icon name={link.icon} aria-hidden="true" />{link.label}</a>)}
+        </div>
+      </div>
+      <Image class="portrait" src={portrait} alt={copy.portrait} width={192} height={192} format="webp" loading="eager" />
+    </header>
+
+    <section class="section" aria-labelledby="summary-heading">
+      <h2 id="summary-heading">{copy.profile}</h2>
+      <p class="summary">{cv.summary[locale]}</p>
+    </section>
+
+    <section class="section" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">{copy.expertise}</h2>
+      <div class="skill-list">
+        {cv.skills.map((group) => (
+          <div class="skill-row">
+            <h3>{group.category[locale]}</h3>
+            <p>{group.items.map((item) => typeof item === 'string' ? item : item[locale]).join(' · ')}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">{copy.experience}</h2>
+      <div class="entry-list">
+        {cv.experience.map((job) => (
+          <article class="entry">
+            <div class="entry-head">
+              <div>
+                <h3>{job.role[locale]}</h3>
+                <p class="entry-subtitle">{formatWorkplace(job)}</p>
+              </div>
+              <p class="period">{formatPeriod(job.period)}</p>
+            </div>
+            <ul>
+              {job.achievements.map((item) => <li>{item[locale]}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section projects-section" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">{copy.projects}</h2>
+      <div class="entry-list">
+        {cv.projects.map((project) => (
+          <article class="entry project">
+            <h3>
+              <a href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
+            </h3>
+            <p>{project.description[locale]}</p>
+            <p class="technologies">{project.technologies.join(' · ')}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="certifications-heading">
+      <h2 id="certifications-heading">{copy.certifications}</h2>
+      <div class="compact-list">
+        {cv.certifications.map((certificate) => (
+          <div class="compact-row">
+            <div>
+              <h3>{certificate.name[locale]}</h3>
+              <p>{certificate.issuer}</p>
+              {certificate.detail && <p class="compact-detail">{certificate.detail[locale]}</p>}
+            </div>
+            <span class="period">
+              {formatDate(certificate.issued)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="education-heading">
+      <h2 id="education-heading">{copy.education}</h2>
+      <div class="compact-list">
+        {cv.education.map((school) => (
+          <div class="compact-row">
+            <div>
+              <h3>{school.field[locale]}</h3>
+              <p class="entry-subtitle">
+                {school.institution} · {copy.gpa} {new Intl.NumberFormat(locale === 'id' ? 'id-ID' : 'en-US', { minimumFractionDigits: 2 }).format(school.gpa)}
+              </p>
+            </div>
+            <span class="period">{school.startYear} - {school.endYear}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function setupCvInteractions() {
+      const themeButton = document.querySelector<HTMLButtonElement>('#theme-toggle');
+      const printButton = document.querySelector<HTMLButtonElement>('#print-button');
+
+      if (themeButton) {
+        const updateThemeButton = () => {
+          const isDark = document.documentElement.dataset.theme === 'dark';
+          const label = isDark
+            ? themeButton.dataset.lightLabel
+            : themeButton.dataset.darkLabel;
+          if (!label) return;
+          themeButton.setAttribute('aria-label', label);
+          themeButton.setAttribute('title', label);
+        };
+
+        themeButton.addEventListener('click', () => {
+          const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem('cv-theme', next); } catch {}
+          updateThemeButton();
+        });
+        updateThemeButton();
+      }
+
+      printButton?.addEventListener('click', () => window.print());
+    }
+
+    document.addEventListener('astro:page-load', setupCvInteractions);
+  </script>
+</Layout>
