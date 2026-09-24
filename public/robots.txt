@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://farulwananda.dev/sitemap-index.xml
+Sitemap: https://farulwananda.my.id/sitemap-index.xml

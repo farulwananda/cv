@@ -1,13 +1,10 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "farulwananda-cv",
-  "compatibility_date": "2026-09-08",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2026-09-24",
   "assets": {
-    "directory": "./dist/client",
-    "binding": "ASSETS"
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
   },
-  "observability": {
-    "enabled": true
-  }
 }
