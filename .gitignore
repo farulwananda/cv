@@ -1,19 +1,9 @@
-# Build outputs
-dist/
-.output/
-.nitro/
-.astro/
-
-# Dependencies
 node_modules/
-app-react/node_modules/
-app-react/.output/
-app-react/.nitro/
-
-# Environment and temp
+dist/
+.astro/
+.wrangler/
 .env
 .env.*
-.dev.vars
-.wrangler/
+.dev.vars*
 .DS_Store
 *.log
