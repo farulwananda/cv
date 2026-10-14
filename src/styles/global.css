@@ -496,9 +496,6 @@ h1 {
   .compact-list {
     gap: 12px;
   }
-  .projects-section {
-    break-before: page;
-  }
   .entry,
   .compact-row,
   .skill-row {

@@ -47,7 +47,7 @@ export const ui = {
     print: "Cetak atau simpan sebagai PDF",
     lightTheme: "Ganti ke tema terang",
     darkTheme: "Ganti ke tema gelap",
-    portrait: "Foto Farul Wananda",
+    portrait: "Foto Farul Ahmad Wananda",
     profile: "Profil",
     expertise: "Keahlian",
     experience: "Pengalaman",
@@ -56,8 +56,8 @@ export const ui = {
     education: "Pendidikan",
     present: "Sekarang",
     gpa: "IPK",
-    pageTitle: "Farul Wananda | Software Engineer & Backend Engineer",
-    description: "CV Farul Wananda: pengembangan sistem akademik terpadu, backend, serta pemantauan dan analisis media sosial.",
+    pageTitle: "Farul Ahmad Wananda | Software Engineer, Backend & DevOps",
+    description: "CV Farul Ahmad Wananda: aplikasi web produksi, sistem backend, sistem akademik, pemantauan media sosial, dan operasi aplikasi.",
   },
   en: {
     actions: "CV actions",
@@ -65,7 +65,7 @@ export const ui = {
     print: "Print or save as PDF",
     lightTheme: "Switch to light theme",
     darkTheme: "Switch to dark theme",
-    portrait: "Portrait of Farul Wananda",
+    portrait: "Portrait of Farul Ahmad Wananda",
     profile: "Profile",
     expertise: "Expertise",
     experience: "Experience",
@@ -74,27 +74,27 @@ export const ui = {
     education: "Education",
     present: "Present",
     gpa: "GPA",
-    pageTitle: "Farul Wananda | Software Engineer & Backend Engineer",
-    description: "Farul Wananda's CV: integrated academic systems, backend engineering, and social media monitoring and analysis.",
+    pageTitle: "Farul Ahmad Wananda | Software Engineer, Backend & DevOps",
+    description: "Farul Ahmad Wananda's CV: production web applications, backend systems, academic information systems, social media monitoring, and application operations.",
   },
 } satisfies Record<Locale, Record<string, string>>;
 
 export const cv = {
   draft: true,
-  name: "Farul Wananda",
+  name: "Farul Ahmad Wananda",
   title: {
-    id: "Software Engineer · Backend Engineer",
-    en: "Software Engineer · Backend Engineer",
+    id: "Software Engineer · Backend & DevOps",
+    en: "Software Engineer · Backend & DevOps",
   },
-  location: "Indonesia",
+  location: "Bondowoso, Jawa Timur, Indonesia",
   email: "farulwananda@outlook.com",
   links: [
     { label: "GitHub", url: "https://github.com/farulwananda", icon: "ph:github-logo" },
     { label: "LinkedIn", url: "https://linkedin.com/in/farulwananda", icon: "ph:linkedin-logo" },
   ],
   summary: {
-    id: "Software engineer yang mengembangkan dan memelihara aplikasi web produksi, sistem backend, dan platform berbasis data. Berpengalaman membangun sistem informasi akademik terpadu serta sistem pemantauan dan analisis media sosial dengan jutaan data. Berfokus pada integrasi sistem, keandalan, performa, dan kemudahan pemeliharaan.",
-    en: "Software engineer building and maintaining production web applications, backend systems, and data platforms. Experienced in developing integrated academic information systems and social media monitoring and analysis platforms handling millions of records. Focused on system integration, reliability, performance, and maintainability.",
+    id: "Software engineer yang mengembangkan dan memelihara aplikasi web produksi, layanan backend, serta sistem berbasis data. Berpengalaman dengan sistem informasi akademik, platform pemantauan media sosial, REST API, integrasi pihak ketiga, dan migrasi data akademik berskala besar. Menangani deployment, lingkungan server, dan masalah produksi di VPS serta Google Cloud Platform dengan fokus pada keandalan dan kemudahan pemeliharaan.",
+    en: "Software and backend engineer developing, deploying, and maintaining production web applications, backend services, and data-intensive systems. Experienced in academic information systems, social media monitoring platforms, REST APIs, third-party integrations, and large-scale academic data migration. Manage server environments, production troubleshooting, and deployments on VPS infrastructure and Google Cloud Platform, with a focus on reliability and maintainability.",
   },
   skills: [
     {
@@ -118,79 +118,95 @@ export const cv = {
     {
       company: "KodeKarsa",
       role: { id: "Pendiri & Software Engineer", en: "Founder & Software Engineer" },
-      period: { start: { year: 2025 } },
+      period: { start: { year: 2026, month: 9 } },
       achievements: [
         {
-          id: "Mendirikan KodeKarsa untuk mengembangkan aplikasi web, layanan backend, integrasi, dan produk digital.",
-          en: "Founded KodeKarsa to develop web applications, backend services, integrations, and digital products.",
+          id: "Mendirikan KodeKarsa untuk mengembangkan produk digital, aplikasi web, dan layanan backend yang mudah dipelihara.",
+          en: "Founded KodeKarsa to develop maintainable digital products, web applications, and backend services.",
         },
         {
-          id: "Merancang arsitektur, API, dan alur data; membangun serta memelihara aplikasi dengan Next.js, Bun, dan TypeScript.",
-          en: "Design architecture, APIs, and data flows; build and maintain applications with Next.js, Bun, and TypeScript.",
+          id: "Merancang arsitektur aplikasi, integrasi API, dan alur data menggunakan TanStack, Bun, serta TypeScript.",
+          en: "Design application architecture, API integrations, and data workflows using TanStack, Bun, and TypeScript.",
+        },
+        {
+          id: "Mengelola repositori, alur pengembangan, deployment, dan pemeliharaan; membangun komponen aplikasi serta fondasi backend yang dapat digunakan kembali.",
+          en: "Manage repositories, development workflows, deployments, and maintenance; build reusable application components and backend foundations.",
         },
       ],
     },
     {
       company: "Masoem University",
-      role: { id: "Software Engineer (Kontrak)", en: "Software Engineer (Contract)" },
+      role: { id: "Software Engineer", en: "Software Engineer" },
       period: { start: { year: 2025, month: 5 } },
       location: "Bandung",
       workMode: { id: "Remote", en: "Remote" },
       achievements: [
         {
-          id: "Mengembangkan dan memelihara SIAKAD end-to-end dengan PHP kustom berarsitektur mirip Laravel dan Tailwind CSS.",
-          en: "Develop and maintain the end-to-end academic information system using custom PHP with a Laravel-like architecture and Tailwind CSS.",
+          id: "Mengembangkan dan memelihara SIAKAD terpadu untuk data mahasiswa, administrasi akademik, penjadwalan, dan alur kerja kampus menggunakan PHP kustom dan Tailwind CSS.",
+          en: "Develop and maintain an integrated academic information system for student records, academic administration, scheduling, and university workflows using custom PHP and Tailwind CSS.",
         },
         {
-          id: "Memigrasikan jutaan rekaman data lama dengan Go serta mengintegrasikan data akademik dan proses operasional kampus.",
-          en: "Migrated millions of legacy records with Go and integrated academic data with university workflows.",
+          id: "Mengembangkan proses berbasis Go untuk memindahkan dan mengolah jutaan rekaman akademik lama ke sistem baru.",
+          en: "Develop Go-based processes to transfer and process millions of legacy academic records into the new system.",
+        },
+        {
+          id: "Mengelola deployment dan lingkungan server, menangani masalah aplikasi serta basis data di produksi, dan menerjemahkan kebutuhan kampus menjadi fitur sistem.",
+          en: "Manage deployments and server environments, troubleshoot production application and database issues, and turn university requirements into system features.",
         },
       ],
     },
     {
       company: "PT Media Promosi Online",
-      role: { id: "Software Engineer (Kontrak)", en: "Software Engineer (Contract)" },
+      role: { id: "Software Engineer", en: "Software Engineer" },
       period: { start: { year: 2024, month: 10 } },
       location: "Denpasar, Bali",
       workMode: { id: "di lokasi", en: "On-site" },
       achievements: [
         {
-          id: "Mengembangkan dan memelihara aplikasi produksi, layanan backend, REST API, serta integrasi pihak ketiga dengan PHP, Laravel, Python, dan Go.",
-          en: "Develop and maintain production applications, backend services, REST APIs, and third-party integrations with PHP, Laravel, Python, and Go.",
+          id: "Mengembangkan aplikasi web produksi, layanan backend, REST API, dan integrasi pihak ketiga menggunakan PHP, Laravel, Python, serta Go.",
+          en: "Develop production web applications, backend services, REST APIs, and third-party integrations using PHP, Laravel, Python, and Go.",
         },
         {
-          id: "Menangani deployment dan pemecahan masalah pada cPanel serta VPS, termasuk performa aplikasi dan basis data.",
-          en: "Handle deployment and troubleshooting on cPanel and VPS infrastructure, including application and database performance.",
+          id: "Berkontribusi pada Trend24 melalui integrasi sumber data, alur pemrosesan, fitur analitik, serta pengumpulan dan pelaporan data otomatis.",
+          en: "Contribute to Trend24 through data integrations, processing workflows, analytics features, and automated collection and reporting.",
+        },
+        {
+          id: "Mengelola deployment di VPS, cPanel, dan aaPanel; menangani konfigurasi server, masalah produksi, serta optimasi performa basis data.",
+          en: "Manage deployments on VPS, cPanel, and aaPanel; handle server configuration, production issues, and database performance optimization.",
         },
       ],
     },
     {
       company: "PT Mangli Djaya Raya",
       role: { id: "Magang Pengembang Backend", en: "Backend Developer Intern" },
-      period: { start: { year: 2023 }, end: { year: 2023 } },
+      period: { start: { year: 2023, month: 8 }, end: { year: 2023, month: 12 } },
       achievements: [
         {
           id: "Mengembangkan komponen backend API untuk aplikasi point of sale BRC milik Besuki Raya Cigar menggunakan CodeIgniter 3.",
           en: "Developed backend API components for Besuki Raya Cigar's BRC point-of-sale application using CodeIgniter 3.",
         },
         {
-          id: "Mengerjakan pemrosesan data dan integrasi API antara layanan backend dan aplikasi klien.",
-          en: "Worked on data processing and API integration between backend services and client applications.",
+          id: "Mengerjakan pemrosesan data dan integrasi API antara backend dan aplikasi klien; membantu pemeliharaan serta penanganan masalah aplikasi dan basis data.",
+          en: "Implemented data processing and API integration between backend and client applications; supported application and database maintenance and troubleshooting.",
         },
       ],
     },
     {
       company: "Bangkit Academy 2023",
       role: { id: "Program Cloud Computing", en: "Cloud Computing Program" },
-      period: { start: { year: 2023 }, end: { year: 2023 } },
+      period: { start: { year: 2023, month: 1 }, end: { year: 2023, month: 7 } },
       achievements: [
         {
-          id: "Terpilih mengikuti jalur Cloud Computing dalam program yang dipimpin Google dengan dukungan GoTo dan Traveloka.",
-          en: "Selected for the Cloud Computing learning path in a program led by Google with support from GoTo and Traveloka.",
+          id: "Menyelesaikan jalur Cloud Computing dalam program yang dipimpin Google bersama GoTo dan Traveloka.",
+          en: "Completed the Cloud Computing learning path in a program led by Google with GoTo and Traveloka.",
         },
         {
-          id: "Menyelesaikan praktik Google Cloud, infrastruktur, dan layanan backend; mengerjakan proyek capstone bersama tim lintas disiplin.",
-          en: "Completed hands-on work in Google Cloud, infrastructure, and backend services; developed a capstone project with a multidisciplinary team.",
+          id: "Menerapkan keterampilan cloud dan backend melalui praktik di Google Cloud Platform, termasuk konfigurasi infrastruktur dan deployment aplikasi.",
+          en: "Applied cloud and backend skills through hands-on work on Google Cloud Platform, including infrastructure configuration and application deployment.",
+        },
+        {
+          id: "Berkolaborasi dengan tim lintas disiplin untuk mengembangkan dan menyelesaikan aplikasi capstone.",
+          en: "Collaborated with a multidisciplinary team to develop and deliver a capstone application.",
         },
       ],
     },
@@ -203,7 +219,7 @@ export const cv = {
         id: "Mendirikan studio product engineering untuk membangun aplikasi web dan layanan backend. Merancang arsitektur, model data, API, dan integrasi; mengerjakan implementasi, deployment, serta pemeliharaan produk dan situs KodeKarsa.",
         en: "Founded a product engineering studio for web applications and backend services. Design architecture, data models, APIs, and integrations; handle implementation, deployment, and maintenance of products and the KodeKarsa website.",
       },
-      technologies: ["Next.js", "Bun", "TypeScript"],
+      technologies: ["TanStack", "Bun", "TypeScript"],
     },
     {
       title: "Welcome.to",
@@ -252,7 +268,7 @@ export const cv = {
   education: [
     {
       institution: "Politeknik Negeri Jember",
-      field: { id: "Teknik Informatika", en: "Informatics Engineering" },
+      field: { id: "Teknologi Informasi (D4)", en: "Information Technology (D4)" },
       startYear: 2020,
       endYear: 2024,
       gpa: 3.86,
