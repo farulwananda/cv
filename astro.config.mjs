@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 export default defineConfig({
-  site: "https://cv.farulwananda.my.id",
+  site: "https://farulwananda.my.id",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "id"],

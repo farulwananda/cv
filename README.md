@@ -27,6 +27,6 @@ bun run deploy:dry-run
 
 ## Cloudflare deployment
 
-The Worker serves static files from `dist`. Its intended custom domain is `cv.farulwananda.my.id`; Astro uses the same domain for canonical URLs and the sitemap. Once the CV content is approved, set `draft: false`, run the checks above, and deploy with `bun run deploy`. Configure the custom domain in Cloudflare before directing visitors to it. The existing apex domain can then be assigned to the portfolio site.
+The Worker serves static files from `dist`. Its intended custom domain is `farulwananda.my.id`; Astro uses the same domain for canonical URLs and the sitemap. Once the CV content is approved, set `draft: false`, run the checks above, and deploy with `bun run deploy`. Configure the custom domain in Cloudflare before directing visitors to it. The CV uses the apex domain until the portfolio is ready to take it over.
 
 No database, API binding, or runtime secret is required.
