@@ -7,3 +7,5 @@ dist/
 .dev.vars*
 .DS_Store
 *.log
+.agents/
+.claude/

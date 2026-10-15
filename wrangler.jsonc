@@ -2,7 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "farulwananda-cv",
   "compatibility_date": "2026-09-24",
-  "routes": [{ "pattern": "farulwananda.my.id", "custom_domain": true }],
+  "routes": [{ "pattern": "cv.farulwananda.my.id", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
