@@ -158,7 +158,7 @@ export const cv = {
     {
       company: "PT Media Promosi Online",
       role: { id: "Software Engineer", en: "Software Engineer" },
-      period: { start: { year: 2024, month: 10 }, end: { year: 2026, month: 11 } },
+      period: { start: { year: 2024, month: 9 }, end: { year: 2026, month: 11 } },
       location: "Denpasar, Bali",
       workMode: { id: "di lokasi", en: "On-site" },
       achievements: [
