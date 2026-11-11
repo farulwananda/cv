@@ -137,7 +137,7 @@ export const cv = {
     {
       company: "Masoem University",
       role: { id: "Software Engineer", en: "Software Engineer" },
-      period: { start: { year: 2025, month: 5 } },
+      period: { start: { year: 2025, month: 5 }, end: { year: 2026, month: 11 } },
       location: "Bandung",
       workMode: { id: "Remote", en: "Remote" },
       achievements: [
@@ -158,7 +158,7 @@ export const cv = {
     {
       company: "PT Media Promosi Online",
       role: { id: "Software Engineer", en: "Software Engineer" },
-      period: { start: { year: 2024, month: 10 } },
+      period: { start: { year: 2024, month: 10 }, end: { year: 2026, month: 11 } },
       location: "Denpasar, Bali",
       workMode: { id: "di lokasi", en: "On-site" },
       achievements: [
