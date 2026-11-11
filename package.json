@@ -27,5 +27,8 @@
   },
   "engines": {
     "bun": ">=1.4.2"
+  },
+  "overrides": {
+    "undici": "^8.12.2"
   }
 }
